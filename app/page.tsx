@@ -4,19 +4,12 @@ import * as React from "react"
 import { useState, useEffect, createContext, useContext, useRef } from 'react';
 import {
   Clock as ClockIcon,
-  Settings,
   Sun,
   Moon,
   Camera,
-  Zap,
-  Monitor,
   Flashlight as FlashlightIcon,
-  Maximize2,
 } from "lucide-react";
 
-// ==========================================
-// 1. 基礎 UI 元件 (Button & Tabs)
-// ==========================================
 function Button({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
@@ -52,9 +45,6 @@ function TabsContent({ value, children, className }: any) {
   return <div className={className}>{children}</div>
 }
 
-// ==========================================
-// 2. 時鐘功能元件 (ClockContainer)
-// ==========================================
 function ClockContainer() {
   const [time, setTime] = useState(new Date());
   useEffect(() => {
@@ -73,9 +63,6 @@ function ClockContainer() {
   );
 }
 
-// ==========================================
-// 3. 鏡子功能元件 (MirrorContainer)
-// ==========================================
 function MirrorContainer({ active }: { active: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -113,11 +100,7 @@ function MirrorContainer({ active }: { active: boolean }) {
   );
 }
 
-// ==========================================
-// 4. 補光燈功能元件 (FlashlightContainer)
-// ==========================================
 function FlashlightContainer() {
-  const [brightness, setBrightness] = useState(100);
   const [color, setColor] = useState("#ffffff");
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-6 transition-colors duration-200" style={{ backgroundColor: color }}>
@@ -133,9 +116,6 @@ function FlashlightContainer() {
   );
 }
 
-// ==========================================
-// 5. 主畫面主要進入點 (Home)
-// ==========================================
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTab, setActiveTab] = useState("clock");
@@ -160,7 +140,6 @@ export default function Home() {
 
   return (
     <main className="relative flex flex-col h-screen w-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 overflow-hidden">
-      {/* 導覽列 */}
       <div className="absolute top-0 left-0 right-0 p-4 z-20 flex justify-center pointer-events-none">
         <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 px-1.5 py-1.5 rounded-full shadow-lg pointer-events-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto">
@@ -179,7 +158,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 主畫面內容 */}
       <div className="flex-1 relative h-full w-full">
         <Tabs value={activeTab} className="h-full w-full">
           <TabsContent value="clock" className="h-full w-full m-0 flex items-center justify-center">
@@ -194,7 +172,6 @@ export default function Home() {
         </Tabs>
       </div>
 
-      {/* 深淺色切換按鈕 */}
       <div className="absolute bottom-6 left-6 z-30">
         <Button
           onClick={() => setIsDarkMode(!isDarkMode)}
